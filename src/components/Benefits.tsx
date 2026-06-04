@@ -1,4 +1,5 @@
 import { Banknote, Car, Smartphone, TrendingUp } from "lucide-react";
+import { DISPATCH_TEXT } from "@/lib/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FadeIn } from "@/components/FadeIn";
 
@@ -13,7 +14,7 @@ const BENEFITS = [
     icon: Car,
     title: "Бесплатный выезд",
     description:
-      "Курьер приедет в Центральный, Железнодорожный, Ингодинский и другие районы Читы за 30 минут.",
+      `Курьер приедет в Центральный, Железнодорожный, Ингодинский и другие районы Читы ${DISPATCH_TEXT}.`,
   },
   {
     icon: Banknote,

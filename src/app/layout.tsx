@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SITE_NAME, CITY } from "@/lib/constants";
+import { CITY, DISPATCH_TEXT, SITE_NAME } from "@/lib/constants";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: `${SITE_NAME} — выкуп iPhone в ${CITY}`,
   description:
-    "Выкуп iPhone и техники Apple в Чите. Оценка за 5 минут, выезд за 30 минут, оплата сразу. iPhone 12–16, любое состояние.",
+    `Выкуп iPhone и техники Apple в ${CITY}. Оценка за 5 минут, выезд ${DISPATCH_TEXT}, оплата сразу.`,
   keywords: [
     "выкуп iPhone Чита",
     "продать iPhone Чита",

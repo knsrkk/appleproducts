@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Apple, MessageCircle, Phone } from "lucide-react";
 import {
   CITY,
+  DISPATCH_TEXT,
   NAV_LINKS,
   PHONE_DISPLAY,
   PHONE_RAW,
@@ -25,7 +26,7 @@ export function Footer() {
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
               Выкуп iPhone и техники Apple в {CITY}. Честная оценка, быстрая оплата,
-              выезд по городу за 30 минут.
+              выезд по городу {DISPATCH_TEXT}.
             </p>
           </div>
 

@@ -1,7 +1,7 @@
 import { Clock, MapPin, Send, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/FadeIn";
-import { CITY, TELEGRAM_URL } from "@/lib/constants";
+import { CITY, DISPATCH_LABEL, DISPATCH_TEXT, TELEGRAM_URL } from "@/lib/constants";
 
 export function Hero() {
   return (
@@ -28,7 +28,7 @@ export function Hero() {
         <FadeIn delay={200}>
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
             Выкупаем iPhone и технику Apple по рыночной цене. Оценка онлайн,
-            выезд курьера за 30 минут по всему городу. Деньги сразу — наличными
+            выезд курьера {DISPATCH_TEXT} по всему городу. Деньги сразу — наличными
             или на карту.
           </p>
         </FadeIn>
@@ -52,7 +52,7 @@ export function Hero() {
             {[
               {
                 icon: Clock,
-                title: "30 минут по Чите",
+                title: `${DISPATCH_LABEL} по Чите`,
                 text: "Выезжаем в любой район города",
               },
               {

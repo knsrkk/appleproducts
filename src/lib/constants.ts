@@ -9,12 +9,14 @@ export { DEVICE_CONDITIONS, type DeviceCondition };
 
 export const SITE_NAME = "Apple Выкуп Чита";
 export const CITY = "Чита";
-export const PHONE_DISPLAY = "+7 (914) 000-00-00";
-export const PHONE_RAW = "+79140000000";
-export const WHATSAPP_URL = "https://wa.me/79140000000";
-export const TELEGRAM_USERNAME = "@your_username";
+export const DISPATCH_LABEL = "1 час";
+export const DISPATCH_TEXT = "за 1 час";
+export const PHONE_DISPLAY = "+7 931 265 1048";
+export const PHONE_RAW = "+7 931 265 1048";
+export const WHATSAPP_URL = "https://wa.me/79312651048";
+export const TELEGRAM_USERNAME = "@appleproductt";
 /** Ссылка на личный Telegram или бота */
-export const TELEGRAM_URL = "https://t.me/your_username";
+export const TELEGRAM_URL = "https://t.me/appleproductt";
 
 /** Галерея выкупов — положите фото в public/gallery/ */
 export const BUYOUT_GALLERY = [
