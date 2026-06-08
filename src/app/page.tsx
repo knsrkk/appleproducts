@@ -5,6 +5,7 @@ import { BuyoutGallery } from "@/components/BuyoutGallery";
 import { PriceCards } from "@/components/PriceCards";
 import { Calculator } from "@/components/Calculator";
 import { SellForm } from "@/components/SellForm";
+import { AvitoBanner } from "@/components/AvitoBanner";
 import { Reviews } from "@/components/Reviews";
 import { MapSection } from "@/components/MapSection";
 import { Footer } from "@/components/Footer";
@@ -16,6 +17,7 @@ export default function Home() {
       <main>
         <Hero />
         <Benefits />
+        <AvitoBanner />
         <BuyoutGallery />
         <PriceCards />
         <Calculator />

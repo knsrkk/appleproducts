@@ -1,133 +1,81 @@
 # Apple Выкуп Чита
 
-Сайт на **Next.js** (App Router) для бизнеса по выкупу iPhone и техники Apple в городе **Чита**. Форма заявки отправляет уведомления в **Telegram** с данными клиента и ссылкой на загруженное фото.
+Сайт на **Next.js** (App Router) для бизнеса по выкупу iPhone и техники Apple в городе **Чита**. Форма заявки отправляет уведомления в **VK** (личные сообщения) с данными клиента и фото.
 
 ## Стек
 
 - Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS v4
-- shadcn/ui (кнопки, карточки, инпуты, селекты)
+- shadcn/ui
 - React Hook Form + Zod
-- Axios (клиентские запросы)
+- vk-io (отправка в VK)
+- Axios
 
 ## Быстрый старт
 
 ```bash
 npm install
 cp .env.local.example .env.local
-# Заполните TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID
+# Заполните VK_ACCESS_TOKEN и VK_PEER_ID
 npm run dev
 ```
 
 Откройте [http://localhost:3000](http://localhost:3000).
 
-Сборка для продакшена:
+## Настройка VK
 
-```bash
-npm run build
-npm start
-```
+### 1. Получить токен
 
-## Настройка Telegram
+1. Создайте приложение VK: [vk.com/apps?act=manage](https://vk.com/apps?act=manage)
+2. Получите токен с правами `messages`, `photos`, `docs` (для загрузки фото в ЛС)
+3. Токен можно получить через OAuth или токен сообщества, если бот пишет от имени группы
 
-### 1. Создать бота
+### 2. Peer ID
 
-1. Откройте [@BotFather](https://t.me/BotFather) в Telegram.
-2. Отправьте `/newbot`, следуйте инструкциям.
-3. Скопируйте **токен** вида `123456789:ABCdef...` — это `TELEGRAM_BOT_TOKEN`.
+`VK_PEER_ID` — ваш числовой ID ВКонтакте (для личных сообщений).
 
-### 2. Получить Chat ID
-
-**Личные сообщения:**
-
-1. Напишите боту любое сообщение (например, `/start`).
-2. Откройте в браузере:
-   ```
-   https://api.telegram.org/bot<ВАШ_ТОКЕН>/getUpdates
-   ```
-3. Найдите `"chat":{"id":123456789}` — это `TELEGRAM_CHAT_ID`.
-
-**Группа:**
-
-1. Добавьте бота в группу.
-2. Напишите в группе сообщение.
-3. Снова откройте `getUpdates` — `chat.id` группы будет отрицательным (например, `-1001234567890`).
+Узнать ID: [vk.com/edit?act=contacts](https://vk.com/edit?act=contacts) или через API `users.get`.
 
 ### 3. Переменные окружения
 
-Создайте файл `.env.local` в корне проекта:
-
 ```env
-TELEGRAM_BOT_TOKEN=ваш_токен
-TELEGRAM_CHAT_ID=ваш_chat_id
-NEXT_PUBLIC_SITE_URL=https://ваш-домен.vercel.app
+VK_ACCESS_TOKEN=ваш_токен
+VK_PEER_ID=123456789
 ```
-
-`NEXT_PUBLIC_SITE_URL` нужен на продакшене, чтобы в Telegram приходила **полная ссылка** на фото (`https://.../uploads/...`).
 
 ## API
 
 | Маршрут | Метод | Описание |
 |---------|--------|----------|
-| `/api/upload` | POST | `multipart/form-data`, поле `file` → `{ fileUrl: "/uploads/uuid.jpg" }` |
-| `/api/send-telegram` | POST | JSON с полями формы + `photoUrl` → отправка в Telegram |
+| `/api/send-vk` | POST | JSON с полями формы + фото (base64) → сообщение в VK |
+| `/api/upload` | POST | Загрузка файла (legacy, форма шлёт base64 напрямую в VK) |
 
-## Загрузка фото
+## Контакты и Авито
 
-Файлы сохраняются в `public/uploads/` с уникальным именем и отдаются как статика по URL `/uploads/...`.
+Настройте в `src/lib/constants.ts`:
 
-> **Важно для Vercel:** файловая система на serverless **временная**. Загруженные фото пропадут после передеплоя или через некоторое время. Для продакшена рекомендуется **S3**, Cloudinary, Uploadthing или аналог. Текущее решение подходит для MVP и тестирования.
+- `PHONE_DISPLAY`, `WHATSAPP_URL`, `TELEGRAM_URL`
+- `AVITO_URL` — ссылка на профиль Авито
 
 ## Деплой на Vercel
 
-1. Загрузите проект на GitHub.
-2. Импортируйте репозиторий на [vercel.com](https://vercel.com).
-3. В **Settings → Environment Variables** добавьте:
-   - `TELEGRAM_BOT_TOKEN`
-   - `TELEGRAM_CHAT_ID`
-   - `NEXT_PUBLIC_SITE_URL` = URL вашего деплоя (например `https://apple-chita.vercel.app`)
-4. Deploy.
+1. Импортируйте репозиторий на [vercel.com](https://vercel.com)
+2. В **Environment Variables** добавьте `VK_ACCESS_TOKEN` и `VK_PEER_ID`
+3. Deploy
 
-После деплоя проверьте форму: заявка должна прийти в Telegram с кликабельной ссылкой на фото.
-
-## Настройка контактов
-
-Отредактируйте `src/lib/constants.ts`:
-
-- `PHONE_DISPLAY`, `PHONE_RAW` — ваш телефон
-- `WHATSAPP_URL` — ссылка `https://wa.me/7XXXXXXXXXX`
-- `TELEGRAM_USERNAME` — ваш @username для футера
-
-## Структура проекта
+## Структура
 
 ```
 src/
-├── app/
-│   ├── api/upload/route.ts
-│   ├── api/send-telegram/route.ts
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
+├── app/api/send-vk/route.ts
 ├── components/
-│   ├── ui/          # shadcn-компоненты
-│   ├── Header.tsx
-│   ├── Hero.tsx
-│   ├── Benefits.tsx
-│   ├── PriceCards.tsx
-│   ├── Calculator.tsx
+│   ├── AvitoBanner.tsx
 │   ├── SellForm.tsx
-│   ├── Reviews.tsx
-│   ├── MapSection.tsx
-│   ├── Footer.tsx
-│   └── FadeIn.tsx
+│   └── ...
 └── lib/
-    ├── constants.ts
-    ├── validation.ts
-    └── utils.ts
-public/uploads/      # загруженные фото
+    ├── price-data.ts   # полный прайс
+    ├── vk.ts
+    └── message-summary.ts
+public/appleproduct-banner.png
 ```
-
-## Лицензия
-
-MIT — используйте свободно для своего бизнеса.

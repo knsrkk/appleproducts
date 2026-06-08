@@ -17,6 +17,10 @@ const buttonVariants = cva(
           "bg-[#25D366] text-white hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/20",
         telegram:
           "bg-[#2AABEE] text-white hover:bg-[#229ED9] shadow-lg shadow-[#2AABEE]/30 border border-[#5bc0f8]/30",
+        avito:
+          "bg-[#00AAFF] text-white hover:bg-[#0099e6] shadow-lg shadow-[#00AAFF]/25 border border-[#66ccff]/30",
+        vk:
+          "bg-[#0077FF] text-white hover:bg-[#0066dd] shadow-lg shadow-[#0077FF]/25 border border-[#5599ff]/30",
       },
       size: {
         default: "h-11 px-6 py-2",

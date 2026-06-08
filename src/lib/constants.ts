@@ -17,6 +17,11 @@ export const WHATSAPP_URL = "https://wa.me/79312651048";
 export const TELEGRAM_USERNAME = "@appleproductt";
 /** Ссылка на личный Telegram или бота */
 export const TELEGRAM_URL = "https://t.me/appleproductt";
+export const VK_URL = "https://vk.com/konosar";
+
+export const AVITO_URL = "https://www.avito.ru/brands/i127417477";
+export const AVITO_REVIEWS_COUNT = 200;
+export const PRODUCT_BANNER_SRC = "/appleproduct-banner.png";
 
 /** Галерея выкупов — положите фото в public/gallery/ */
 export const BUYOUT_GALLERY = [

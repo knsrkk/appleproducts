@@ -61,6 +61,7 @@ export function SellForm() {
       memoryGb: 128,
       condition: "Отличное",
       telegramUsername: "",
+      vkProfileUrl: "",
       comment: "",
     },
   });
@@ -122,7 +123,7 @@ export function SellForm() {
       const photos =
         photoFiles.length > 0 ? await filesToBase64Payload(photoFiles) : undefined;
 
-      await axios.post("/api/send-telegram", {
+      await axios.post("/api/send-vk", {
         ...data,
         estimatedPrice,
         photos,
@@ -136,7 +137,7 @@ export function SellForm() {
       if (axios.isAxiosError(err)) {
         setServerError(
           (err.response?.data as { error?: string })?.error ??
-            "Не удалось отправить заявку. Попробуйте позже или напишите в Telegram.",
+            "Не удалось отправить заявку. Попробуйте позже или напишите нам напрямую.",
         );
       } else if (err instanceof Error) {
         setServerError(err.message);
@@ -214,6 +215,24 @@ export function SellForm() {
                       placeholder="@username"
                       {...register("telegramUsername")}
                     />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="vkProfileUrl">
+                      Ссылка на VK{" "}
+                      <span className="text-muted-foreground">(необязательно)</span>
+                    </Label>
+                    <Input
+                      id="vkProfileUrl"
+                      type="url"
+                      placeholder="https://vk.com/username"
+                      {...register("vkProfileUrl")}
+                    />
+                    {errors.vkProfileUrl && (
+                      <p className="text-sm text-red-400">
+                        {errors.vkProfileUrl.message}
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-2">

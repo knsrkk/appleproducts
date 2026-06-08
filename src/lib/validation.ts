@@ -19,6 +19,17 @@ export const sellFormSchema = z
     memoryGb: z.number().int().positive("Выберите память"),
     condition: z.enum(DEVICE_CONDITIONS, { message: "Выберите состояние" }),
     telegramUsername: z.string().trim().optional(),
+    vkProfileUrl: z
+      .string()
+      .trim()
+      .optional()
+      .refine(
+        (val) =>
+          !val ||
+          /^https?:\/\/(www\.)?vk\.com\/.+/i.test(val) ||
+          /^https?:\/\/(m\.)?vk\.com\/.+/i.test(val),
+        "Укажите ссылку вида https://vk.com/username",
+      ),
     comment: z.string().optional(),
   })
   .superRefine((data, ctx) => {
@@ -40,10 +51,10 @@ const photoBase64Schema = z.object({
   fileName: z.string().optional(),
 });
 
-export const telegramPayloadSchema = sellFormSchema.extend({
+export const submitPayloadSchema = sellFormSchema.extend({
   estimatedPrice: z.number().positive(),
   photos: z.array(photoBase64Schema).max(10).optional(),
 });
 
-export type TelegramPayload = z.infer<typeof telegramPayloadSchema>;
+export type SubmitPayload = z.infer<typeof submitPayloadSchema>;
 export type PhotoPayload = z.infer<typeof photoBase64Schema>;
